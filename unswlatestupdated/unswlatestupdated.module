@@ -1,0 +1,93 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Provides a 'latest updated' timestamp for the current page view.
+ */
+
+
+/**
+ * Implements hook_theme().
+ */
+function unswlatestupdated_theme() {
+  return array(
+    'unswlatestupdated_footer' => array(
+      'variables' => array(
+        'site_last_updated' => NULL,
+      ),
+      'template' => 'unswlatestupdated-footer',
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function unswlatestupdated_block_info() {
+  $blocks['footer']['info'] = t('UNSW latest updated footer');
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function unswlatestupdated_block_view($delta = '') {
+  switch ($delta) {
+    case 'footer':
+      return unswlatestupdated_footer_block();
+  }
+}
+
+/**
+ * Implementation of hook_nodeapi().
+ */
+function unswlatestupdated_node_load($nodes, $types) {
+  $max_changed = 0;
+  
+  foreach ($nodes as $node) {
+    if ($node->changed > $max_changed) {
+      $max_changed = $node->changed;
+    }
+  }
+  
+  unswlatestupdated($max_changed);
+}
+
+/**
+ * Gets (and optionally sets) the time of the most recently-updated node
+ * displayed in a single page view.
+ *
+ * @param $updated
+ *   Last updated UNIX timestamp of a node (i.e. from $node->updated).
+ *   Defaults to NULL.
+ *
+ * @return
+ *   Most recent timestamp available in the current page view.
+ */
+function unswlatestupdated($updated = NULL) {
+  static $latest_updated = NULL;
+
+  if (isset($updated) && (!isset($latest_updated) || $updated > $latest_updated)) {
+    $latest_updated = $updated;
+  }
+
+  return $latest_updated;
+}
+
+/**
+ * Output the Life Learning latest updated footer block.
+ */
+function unswlatestupdated_footer_block() {
+  $site_last_updated = unswlatestupdated();
+  // Always show this block, even if it's empty (to act as a clearing
+  // div for the footer-below region).
+  //if (!empty($site_last_updated)) {
+    $block['content'] = array(
+      '#theme' => 'unswlatestupdated_footer',
+      '#site_last_updated' => !empty($site_last_updated) ? date('l j F Y', $site_last_updated) : NULL,
+    );
+    
+    return $block;
+  //}
+}

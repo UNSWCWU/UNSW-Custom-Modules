@@ -1,0 +1,40 @@
+.block-unswsearchbox,
+.block-unswsearchbox .form-item,
+.block-unswsearchbox .form-submit{
+  float: right;
+}
+.block-unswsearchbox {
+  /*width: 300px;*/
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+.block-unswsearchbox .form-item{
+  margin: 0 0 10px 0px;
+}
+.block-unswsearchbox .form-item .form-text{
+  background: #ffffff url(../images/icon-search.png) no-repeat 5px 3px;
+  border: 1px solid #dedede;
+  height: 25px;
+  margin: 0;
+  width: 240px;
+  padding-left: 28px;
+}
+.block-unswsearchbox .form-radios {
+  margin: 0;
+}
+.block-unswsearchbox .form-radios .form-item{
+  display: inline;
+}
+.block-unswsearchbox .form-radios .form-item label{
+  font-size: 0.9em;
+  color: #999999;
+  margin-right: 5px;
+}
+.block-unswsearchbox .form-submit{
+  background: url(../images/bg_grey.png) repeat-x 0 -13px;
+  border: 1px solid #ccc;
+  height: 24px; 
+  margin: 0;
+  display: none;
+}

@@ -1,0 +1,119 @@
+<?php
+/**
+ * @file
+ * Defines the top header search box for the UNSW Research Gateway web site.
+ * The search block form provided by this module is a modified version of the
+ * core search block form.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function unswsearchbox_menu(){
+  $items['search/unsw'] = array(
+    'title' => 'Search all UNSW websites',
+    'description' => 'Lets you search throught all UNSW websites using google custom search.',
+    'page callback' => 'unswsearchbox_google_custom_search',
+    'access arguments' => array('search content'),
+  );
+  return $items;
+}
+
+/**
+ * Page callback.
+ */
+function unswsearchbox_google_custom_search() {
+  return array(
+    '#theme' => 'unswsearchbox_google_custom_search_results'
+  );
+}
+
+/**
+ * Implements hook_blook_info().
+ */
+function unswsearchbox_block_info() {
+  $blocks['header_search'] = array(
+      'info' => t('UNSW Search Box'),
+      'status' => FALSE,
+      'weight' => 0,
+  );
+  $blocks['gcs_search_results'] = array(
+      'info' => t('UNSW Google Custom Search Results'),
+      'status' => FALSE,
+      'weight' => 0,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view();
+ */
+function unswsearchbox_block_view($delta = '') {
+  switch ($delta) {
+    case 'header_search':
+      $block['content'] = drupal_get_form('unswsearchbox_search_block_form');
+      return $block;
+      
+    case 'gcs_search_results':
+      $block['content'] = array(
+        '#theme' => 'unswsearchbox_google_custom_search_results',
+      );
+      return $block;
+  }
+}
+
+/**
+ * Output the UNSW top header search box.
+ * Based on search_box() in search.module.
+ */
+function unswsearchbox_search_block_form($form_state, $arg = array()) {
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Search'));
+  $form['keyword'] = array(
+    '#type' => 'textfield',
+    '#size' => 20,
+    '#attributes' => array('title' => t('Enter the terms you wish to search for.')),
+  );
+  $form['scope'] = array(
+    '#type' => 'radios',
+    '#options' => array(t('UNSW Websites'), t('This website')),
+    '#default_value' => 1,
+  );
+  $form['#attached'] = array(
+    'css' => array(drupal_get_path('module', 'unswsearchbox') . '/css/unswsearchbox.css'),
+  );
+
+  return $form;
+}
+
+/**
+ * Modified version of search_box_form_submit() in search.pages.inc.
+ */
+function unswsearchbox_search_block_form_submit($form, &$form_state) {
+  if ($form_state['values']['scope'] == 0) {
+    //header('Location: /search/unsw?kw=' . trim($form_state['values']['keyword']));
+    drupal_goto('search/unsw', array('query' => array('kw' => trim($form_state['values']['keyword']))));
+    exit;
+  }
+  else {
+    header('Location: /search/node/' . trim($form_state['values']['keyword']));
+    //drupal_goto('search', array('query' => array('field_search_data_value' => trim($form_state['values']['keyword']))));
+    exit;
+    
+  }
+  return;
+}
+
+
+/**
+ * Implementation of hook_theme()
+ */
+function unswsearchbox_theme($existing, $type, $theme, $path) {
+  return array(
+    'unswsearchbox_google_custom_search_results' => array(
+      'variables' => array(
+        'keyword' => NULL,
+      ),
+      'template'  => 'unswsearchbox-google-search',
+    )
+  );
+}

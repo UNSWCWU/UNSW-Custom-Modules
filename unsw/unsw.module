@@ -1,0 +1,116 @@
+<?php
+/**
+ * @file
+ * Master module containing site wide modification.
+ */
+
+/**
+ * Implementation of hook_nodeapi().
+ */
+function unsw_node_load($nodes, $types) {
+  $max_changed = 0;
+  foreach ($nodes as $node) {
+    if ($node->changed > $max_changed) {
+      $max_changed = $node->changed;
+    }
+  }
+  unsw_latestupdated($max_changed);
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function unsw_block_info() {
+  $blocks['lastupdated']['info'] = t('UNSW latest updated footer');
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function unsw_block_view($delta = '') {
+  switch ($delta) {
+    case 'lastupdated':
+      return unsw_latestupdated_footer_block();
+  }
+}
+
+/**
+ * Output the NSi latest updated footer block.
+ */
+function unsw_latestupdated_footer_block() {
+  $site_last_updated = unsw_latestupdated();
+  if (!empty($site_last_updated)) {
+    $block['content'] = "<p>Page last updated: " . date('l j F Y', $site_last_updated) . "</p>";
+    return $block;
+  }
+}
+
+/**
+ * Gets (and optionally sets) the time of the most recently-updated node
+ * displayed in a single page view.
+ *
+ * @param $updated
+ *   Last updated UNIX timestamp of a node (i.e. from $node->updated).
+ *   Defaults to NULL.
+ *
+ * @return
+ *   Most recent timestamp available in the current page view.
+ */
+function unsw_latestupdated($updated = NULL) {
+  static $latest_updated = NULL;
+
+  if (isset($updated) && (!isset($latest_updated) || $updated > $latest_updated)) {
+    $latest_updated = $updated;
+  }
+
+  return $latest_updated;
+}
+
+/**
+ * Implements hook_html_head_alter().
+ */
+function unsw_html_head_alter(&$head_elements) {
+  // Remove Generator META tag.
+  if (isset($head_elements['system_meta_generator'])) {
+    unset($head_elements['system_meta_generator']);
+  }
+}
+
+
+/**
+ * Implement hook_form_alter()
+ */
+function unsw_form_alter(&$form, &$form_state, $form_id) {
+
+  if ($form['#id'] == 'views-exposed-form-news-block') {
+    unset($form['#attributes']['class'][0]);
+    $form['items_per_page']['#attributes'] = array('class' => array('ctools-auto-submit'));
+  }
+  
+  if ($form['#id'] == 'views-exposed-form-staff-block') {
+    unset($form['#attributes']['class'][0]);
+    $form['items_per_page']['#attributes'] = array('class' => array('ctools-auto-submit'));
+    //$form['field_staff_type_tid']['#attributes'] = array('class' => array('ctools-auto-submit'));
+    //$form['field_staff_type_tid']['#options']['All'] = 'Filter by staff type';
+    $options = array('' => 'Filter by staff type');
+    $query = db_select('node', 'n')->fields('n');
+    $query->condition('type', 'profile_group')->condition('status', 1);
+    $result = $query->execute();
+    foreach($result as $row) {
+      $options[$row->nid] = $row->title;
+    }
+    $form['field_staff_type_target_id']['#attributes'] = array('class' => array('ctools-auto-submit'));
+    $form['field_staff_type_target_id']['#type'] = 'select';
+    $form['field_staff_type_target_id']['#multiple'] = FALSE;
+    $form['field_staff_type_target_id']['#options'] = $options;
+    $form['field_staff_type_target_id']['#size'] = 1;
+    
+  }
+  
+  if ($form['#id'] == 'webform-client-form-30') {
+    //print_r ($form);
+    $form['interested_in']['#options']['selected'] = 'Select';
+  }
+  
+}

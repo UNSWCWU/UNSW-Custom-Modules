@@ -1,0 +1,52 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Defines the icon bar of the UNSW web site.
+ */
+
+/**
+ * Implements hook_blook_info().
+ */
+function unswiconbar_block_info() {
+  $blocks['iconbar'] = array(
+      'info' => t('UNSW Icon Bar - RHS'),
+      'status' => FALSE,
+      'weight' => 0,
+  );
+  $blocks['iconbar_footer'] = array(
+      'info' => t('UNSW Icon Bar - Footer'),
+      'status' => FALSE,
+      'weight' => 0,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view();
+ */
+function unswiconbar_block_view($delta = '') {
+  switch ($delta) {
+    case 'iconbar':
+    case 'iconbar_footer':
+      $page_url = url(substr(request_uri(), 1), array('absolute' => TRUE));
+      $page_title = drupal_get_title();
+      $block['content'] = theme('unswiconbar_iconbar_links', array(
+        'page_url' => $page_url,
+        'page_title' => $page_title));
+      return $block;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function unswiconbar_theme() {
+  return array(
+    'unswiconbar_iconbar_links' => array(
+      'variables' => array('page_url' => NULL, 'page_title' => NULL),
+      'template' => 'unswiconbar-iconbar-links',
+    ),
+  );
+}

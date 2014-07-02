@@ -1,0 +1,6 @@
+These modules are to be used on a Drupal 7.x- install.
+
+Place the unsw custom module folders into the Drupal sites -> all -> modules -> custom directory.
+
+If the custom directory does not already exist, create a folder name "custom" within
+the Drupal directory sites -> all -> modules.

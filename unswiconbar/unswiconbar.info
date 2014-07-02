@@ -1,0 +1,6 @@
+; $Id$
+name = UNSW Icon Bar
+description = Defines the icon bar. This includes Share, Print and RSS link.
+core = 7.x
+version = "7.x-1.0"
+package = "UNSW"

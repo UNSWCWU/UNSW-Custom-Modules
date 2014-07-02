@@ -1,0 +1,8 @@
+; $Id$
+name = UNSW Search box
+description = Defines the header search box for the UNSW website.
+package = "UNSW"
+core = 7.x
+version = "7.0"
+scripts[] = js/searchbox.js
+files[] = unswsearchbox.module
