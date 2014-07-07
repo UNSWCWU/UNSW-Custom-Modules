@@ -43,6 +43,9 @@ function unswiconbar_block_view($delta = '') {
  * Implementation of hook_theme().
  */
 function unswiconbar_theme() {
+  $module_path = drupal_get_path('module', 'unswiconbar');
+  $full_path = $module_path . '/css/unswiconbar.css';
+  drupal_add_css($full_path);
   return array(
     'unswiconbar_iconbar_links' => array(
       'variables' => array('page_url' => NULL, 'page_title' => NULL),

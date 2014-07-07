@@ -1,0 +1,141 @@
+.block-unswiconbar ul,
+.block-unswiconbar ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+.block-unswiconbar ul#icons {
+}
+.block-unswiconbar ul#icons > li {
+  width: 48px;
+  height: 55px;
+  border: 1px solid transparent;
+}
+.block-unswiconbar ul#icons > li > a {
+  display: block;
+  color: #FFFFFF;
+  width: 48px;
+  padding: 35px 0 0 0;
+  height: 20px;
+  text-align: center;
+}
+.block-unswiconbar ul#icons li > a.share {
+  background: url(../images/share.png) no-repeat 12px 5px;
+}
+.block-unswiconbar ul#icons li > a.print {
+  background: url(../images/print.png) no-repeat 12px 5px;
+}
+.block-unswiconbar ul#icons li.share{
+  position: relative;  
+}
+.block-unswiconbar ul#icons li.share:hover {
+  border: 1px solid #415662;
+  border-right: 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+}
+.block-unswiconbar ul#icons li.share:hover > a.share{
+  position: absolute;
+  z-index: 1001;
+  right: 0;
+  top: 0;
+  background: #fff url(../images/share-hover.png) no-repeat 12px 5px;
+  color: #00568e;
+  text-decoration: none;
+}
+.block-unswiconbar ul#icons li.share:hover div.share-box{
+  display: block;
+}
+
+/* 
+ * Shared share-box settings
+ */
+.block-unswiconbar div.share-box {
+  background: #fff;
+  border: 1px solid #00568e;
+  color: #0a6ba0;
+  display: none;
+  padding: 20px;
+  width: 230px;
+  position: absolute;
+  top: -60px;
+  right: -270px;
+  z-index: 1000;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+}
+.block-unswiconbar ul#icons li div.share-box h4 {
+  font-size: 14px;
+  font-weight: normal;
+}
+.block-unswiconbar ul#icons li div.share-box ul.share-links {
+  width: 215px;
+  margin-bottom: 1em;
+}
+.block-unswiconbar ul#icons li div.share-box ul li {
+  float: none;
+}
+.block-unswiconbar ul#icons li div.share-box ul li a{
+  color: #00568e;
+}
+.block-unswiconbar ul#icons li div.share-box ul li a:hover{
+  text-decoration: underline;
+}
+.block-unswiconbar .feature-share{
+  padding: 20px 10px 20px 10px;
+  float: left;
+}
+.block-unswiconbar .feature-share .twitter-share-button{
+  margin: 0px 5px 0 0;
+}
+.block-unswiconbar .feature-share .fb-like{
+  display: inline;
+  
+}
+#block-unswiconbar-iconbar-footer {
+    float: right;
+    width: 150px;
+    height: 70px;
+}
+#block-unswiconbar-iconbar-footer .content{
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#block-unswiconbar-iconbar ul#icons > li {
+  border-color: #fff;
+  height: 60px;
+}
+#block-unswiconbar-iconbar ul#icons > li > a {
+  background: url(../images/icons/iconbar.png) no-repeat -125px 0;
+  color: #778d9a;
+  display: block;
+  margin: 0;
+  padding: 40px 0 0 0;
+  text-align: center;
+  width: 48px;
+  height: 20px;
+}
+#block-unswiconbar-iconbar ul#icons li.share:hover {
+  border: 1px solid #415662;
+  border-bottom: 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 5px;
+}
+#block-unswiconbar-iconbar ul#icons li.share:hover > a.share{
+  position: absolute;
+  z-index: 1001;
+  right: 0;
+  top: 0;
+  background: #fff url(../images/icons/iconbar-hover.png) no-repeat 13px 5px;
+  color: #00568e;
+  text-decoration: none;
+}
+#block-unswiconbar-iconbar ul#icons li a.print {
+  background: url(../images/icons/iconbar-hover.png) no-repeat -32px 5px;
+}
+#block-unswiconbar-iconbar div.share-box {
+  top: 59px;
+  right: -50px;
+}
