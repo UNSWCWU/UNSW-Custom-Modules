@@ -5,3 +5,5 @@ core = 7.x
 version = "7.x-1.0"
 package = "UNSW"
 files[] = unswiconbar.module
+
+stylesheets[all][] = css/unswiconbar.css

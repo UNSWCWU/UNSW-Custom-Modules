@@ -95,7 +95,8 @@
 }
 #block-unswiconbar-iconbar-footer {
     float: right;
-    width: 150px;
+    /*width: 150px;*/
+    width: 12.82%;
     height: 70px;
 }
 #block-unswiconbar-iconbar-footer .content{
